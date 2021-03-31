@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Spacing -->
+    <dimen name="global_spacing_tiny">8dp</dimen>
     <dimen name="global_spacing_small">16dp</dimen>
     <dimen name="global_spacing_medium">32dp</dimen>
 
     <!-- Text -->
     <dimen name="global_font_small">16sp</dimen>
     <dimen name="global_font_medium">32sp</dimen>
+
+    <!-- AddItemDialogFragment -->
+    <dimen name="extra_dialog_space_bottom">200dp</dimen>
 </resources>

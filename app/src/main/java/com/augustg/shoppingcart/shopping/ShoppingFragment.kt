@@ -2,7 +2,6 @@ package com.augustg.shoppingcart.shopping
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -16,17 +15,28 @@ class ShoppingFragment : Fragment(R.layout.fragment_shopping) {
     private var _binding: FragmentShoppingBinding? = null
     private val binding get() = _binding!!
 
+    private val itemListAdapter = ItemListAdapter()
+
     private fun initViews() {
         binding.addItemFab.setOnClickListener {
             findNavController().navigate(R.id.action_shoppingFragment_to_addItemDialogFragment)
         }
+
+        binding.itemsInCartList.adapter = itemListAdapter
+
+        SwipeToDelete { position ->
+            viewModel.removeItemFromCart(position)
+            itemListAdapter.notifyItemRemoved(position)
+        }.attachToRecyclerView(binding.itemsInCartList)
+
+        binding.totalPriceInCart = viewModel.observableTotalPrice
+
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun initObservers() {
-        viewModel.itemEnteredLiveData().observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { item ->
-                Toast.makeText(requireContext(), "Item added: $item", Toast.LENGTH_SHORT).show()
-            }
+        viewModel.itemsInCartLiveData().observe(viewLifecycleOwner) {
+            itemListAdapter.submitList(it)
         }
     }
 
