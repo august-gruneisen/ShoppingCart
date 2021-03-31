@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Screens -->
+    <style name="StartupScreen">
+        <item name="android:background">@color/white</item>
+    </style>
     <style name="ShoppingScreen">
         <item name="android:background">@color/blue</item>
         <item name="android:padding">@dimen/global_spacing_small</item>
