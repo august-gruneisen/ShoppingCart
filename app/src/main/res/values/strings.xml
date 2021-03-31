@@ -5,4 +5,8 @@
     <!-- Startup -->
     <string name="startup_message_text">Ready to shop?</string>
     <string name="start_button_text">Begin</string>
+
+    <!-- Shopping -->
+    <string name="empty_cart_message_text">To add a new item, click on the + button</string>
+    <string name="add_item_fab_content_description">Add a new item</string>
 </resources>

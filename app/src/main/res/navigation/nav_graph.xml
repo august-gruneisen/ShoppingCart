@@ -9,5 +9,14 @@
         android:id="@+id/startupFragment"
         android:name="com.augustg.shoppingcart.startup.StartupFragment"
         android:label="fragment_startup"
-        tools:layout="@layout/fragment_startup" />
+        tools:layout="@layout/fragment_startup">
+        <action
+            android:id="@+id/action_startupFragment_to_shoppingFragment"
+            app:destination="@id/shoppingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shoppingFragment"
+        android:name="com.augustg.shoppingcart.shopping.ShoppingFragment"
+        android:label="fragment_shopping"
+        tools:layout="@layout/fragment_shopping" />
 </navigation>
