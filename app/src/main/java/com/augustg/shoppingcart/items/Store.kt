@@ -1,5 +1,6 @@
 package com.augustg.shoppingcart.items
 
+import java.math.BigDecimal
 import java.util.*
 
 object Store {
@@ -29,9 +30,9 @@ object Store {
     }
 
     /**
-     * Returns the price of an item, or -1 if that item is out of stock
+     * Returns the price of an item, or -1 if that item is not available
      */
-    fun getPriceIfInStock(itemName: String): Double {
-        return sampleInventory[itemName]?.price ?: -1.0
+    fun getPrice(itemName: String): BigDecimal {
+        return sampleInventory[itemName]?.price?.toBigDecimal() ?: BigDecimal(-1)
     }
 }

@@ -8,6 +8,7 @@ import com.augustg.shoppingcart.items.Item
 import com.augustg.shoppingcart.items.Store
 import com.augustg.shoppingcart.util.Formats.getAsCurrency
 import com.augustg.shoppingcart.util.Formats.getLocale
+import java.math.BigDecimal
 
 class ShoppingViewModel : ViewModel() {
 
@@ -20,7 +21,7 @@ class ShoppingViewModel : ViewModel() {
     private val itemsInCartLiveData = MutableLiveData<MutableList<Item>>(mutableListOf())
     fun itemsInCartLiveData(): LiveData<MutableList<Item>> = itemsInCartLiveData
 
-    private var totalPriceInCart = 0.0
+    private var totalPriceInCart: BigDecimal = BigDecimal.ZERO
     var observableTotalPrice = ObservableField(getAsCurrency(totalPriceInCart))
 
     /**
@@ -29,9 +30,9 @@ class ShoppingViewModel : ViewModel() {
     private fun addItemsToCart(validItemName: String, quantity: Int) {
         val newList = itemsInCartLiveData().value?.toMutableList()
         newList?.let { items ->
-            val price = Store.getPriceIfInStock(validItemName)
-            if (price < 0) return
-            totalPriceInCart += (price * quantity)
+            val price = Store.getPrice(validItemName)
+            if (price < BigDecimal.ZERO) return // happens if the item is unavailable
+            totalPriceInCart += (price * BigDecimal(quantity))
             observableTotalPrice.set(getAsCurrency(totalPriceInCart))
 
             for (i in 1..quantity) {
@@ -48,7 +49,7 @@ class ShoppingViewModel : ViewModel() {
 
     fun removeItemFromCart(position: Int) {
         val item = itemsInCartLiveData.value?.get(position)
-        totalPriceInCart -= item?.price ?: 0.0
+        totalPriceInCart -= item?.price ?: BigDecimal.ZERO
         observableTotalPrice.set(getAsCurrency(totalPriceInCart))
         itemsInCartLiveData.value?.removeAt(position)
     }
