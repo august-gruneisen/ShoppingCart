@@ -9,4 +9,6 @@
     <!-- Shopping -->
     <string name="empty_cart_message_text">To add a new item, click on the + button</string>
     <string name="add_item_fab_content_description">Add a new item</string>
+    <string name="enter_item_name_text">Enter item name</string>
+    <string name="enter_item_button_text">Add to cart</string>
 </resources>

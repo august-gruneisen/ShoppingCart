@@ -18,5 +18,14 @@
         android:id="@+id/shoppingFragment"
         android:name="com.augustg.shoppingcart.shopping.ShoppingFragment"
         android:label="fragment_shopping"
-        tools:layout="@layout/fragment_shopping" />
+        tools:layout="@layout/fragment_shopping">
+        <action
+            android:id="@+id/action_shoppingFragment_to_addItemDialogFragment"
+            app:destination="@id/addItemDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addItemDialogFragment"
+        android:name="com.augustg.shoppingcart.shopping.AddItemDialogFragment"
+        android:label="dialog_fragment_add_item"
+        tools:layout="@layout/dialog_fragment_add_item" />
 </navigation>
