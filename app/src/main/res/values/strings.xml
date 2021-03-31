@@ -1,0 +1,8 @@
+<resources>
+    <!-- Global -->
+    <string name="app_name">ShoppingCart</string>
+
+    <!-- Startup -->
+    <string name="startup_message_text">Ready to shop?</string>
+    <string name="start_button_text">Begin</string>
+</resources>

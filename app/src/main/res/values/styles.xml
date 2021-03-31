@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text -->
+    <style name="h1">
+        <item name="android:textSize">@dimen/global_font_medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- Buttons -->
+    <style name="BigButton">
+        <item name="android:textSize">@dimen/global_font_medium</item>
+        <item name="android:padding">@dimen/global_spacing_medium</item>
+    </style>
+</resources>
