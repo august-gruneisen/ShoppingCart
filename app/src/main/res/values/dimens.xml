@@ -10,5 +10,5 @@
     <dimen name="global_font_medium">32sp</dimen>
 
     <!-- AddItemDialogFragment -->
-    <dimen name="extra_dialog_space_bottom">200dp</dimen>
+    <dimen name="camera_preview_height">350dp</dimen>
 </resources>

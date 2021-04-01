@@ -1,11 +1,17 @@
 package com.augustg.shoppingcart.shopping
 
 import android.os.Bundle
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
 import androidx.navigation.navGraphViewModels
 import com.augustg.shoppingcart.R
 import com.augustg.shoppingcart.databinding.DialogFragmentAddItemBinding
@@ -19,7 +25,7 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
     private var _binding: DialogFragmentAddItemBinding? = null
     private val binding get() = _binding!!
 
-    var quantity = 0 // TODO: move to view model
+    var quantity = 1 // TODO: move to view model
 
     private fun initViews() {
         binding.enterItemNameField.setAdapter(
@@ -40,7 +46,7 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
         }
 
         binding.decrementQuantityButton.setOnClickListener {
-            if (quantity > 0) {
+            if (quantity > 1) {
                 quantity--
                 binding.quantityField.text = quantity.toString()
             }
@@ -56,6 +62,45 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private fun initCamera() {
+        ProcessCameraProvider.getInstance(requireContext()).let { cameraProviderFuture ->
+            cameraProviderFuture.addListener({
+                val cameraProvider = cameraProviderFuture.get()
+
+                val preview: Preview = Preview.Builder()
+                    .build()
+
+                val cameraSelector: CameraSelector = CameraSelector.Builder()
+                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                    .build()
+
+                val imageAnalysis = ImageAnalysis.Builder()
+                    .setTargetResolution(Size(1280, 720))
+                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                    .build()
+
+                imageAnalysis.setAnalyzer(
+                    ContextCompat.getMainExecutor(requireContext()),
+                    QRAnalyzer(this::onDetectedQRCode)
+                )
+
+                preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+
+                cameraProvider.bindToLifecycle(
+                    viewLifecycleOwner,
+                    cameraSelector,
+                    imageAnalysis,
+                    preview
+                )
+
+            }, ContextCompat.getMainExecutor(requireContext()))
+        }
+    }
+
+    private fun onDetectedQRCode(itemId: String) {
+        if (view != null) binding.enterItemNameField.setText(itemId)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,6 +112,7 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViews()
+        initCamera()
     }
 
     override fun onDestroyView() {
