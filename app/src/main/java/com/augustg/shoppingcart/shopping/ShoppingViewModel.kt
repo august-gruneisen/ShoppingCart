@@ -12,9 +12,25 @@ import java.math.BigDecimal
 
 class ShoppingViewModel : ViewModel() {
 
-    fun onEnterItemButtonClicked(textEntered: String, quantity: Int) {
-        if (Store.hasItem(textEntered)) {
-            addItemsToCart(textEntered, quantity)
+    /**
+     * @return false if the item was not found
+     */
+    fun onEnterItemButtonClicked(textEntered: String, quantity: Int): Boolean {
+        return when {
+            textEntered.startsWith("0") -> { // user entered an item id
+                try {
+                    val itemName = Store.getItemName(textEntered)
+                    addItemsToCart(itemName, quantity)
+                    true
+                } catch (e: Store.ItemNotFoundException) {
+                    false
+                }
+            }
+            Store.hasItem(textEntered) -> { // user entered an item name
+                addItemsToCart(textEntered, quantity)
+                true
+            }
+            else -> false
         }
     }
 
@@ -25,19 +41,20 @@ class ShoppingViewModel : ViewModel() {
     var observableTotalPrice = ObservableField(getAsCurrency(totalPriceInCart))
 
     /**
-     * @param validItemName should only be called after validating that the store has this item
+     * Should only be called after validating that the store has this item
+     * @throws Store.ItemNotFoundException
      */
     private fun addItemsToCart(validItemName: String, quantity: Int) {
         val newList = itemsInCartLiveData().value?.toMutableList()
         newList?.let { items ->
             val price = Store.getPrice(validItemName)
-            if (price < BigDecimal.ZERO) return // happens if the item is unavailable
             totalPriceInCart += (price * BigDecimal(quantity))
             observableTotalPrice.set(getAsCurrency(totalPriceInCart))
 
             for (i in 1..quantity) {
                 items.add(
                     Item(
+                        id = Store.getItemId(validItemName),
                         name = validItemName.capitalize(getLocale()),
                         price = price
                     )

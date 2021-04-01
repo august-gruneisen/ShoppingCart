@@ -48,8 +48,11 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
 
         binding.enterItemButton.setOnClickListener {
             val textEntered = binding.enterItemNameField.text.toString()
-            viewModel.onEnterItemButtonClicked(textEntered, quantity)
-            dismiss()
+            if (viewModel.onEnterItemButtonClicked(textEntered, quantity)) {
+                dismiss()
+            } else {
+                Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
