@@ -25,8 +25,6 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
     private var _binding: DialogFragmentAddItemBinding? = null
     private val binding get() = _binding!!
 
-    var quantity = 1 // TODO: move to view model
-
     private fun initViews() {
         binding.enterItemNameField.setAdapter(
             ArrayAdapter(
@@ -37,29 +35,27 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
         )
 
         binding.incrementQuantityButton.setOnClickListener {
-            if (quantity < 3) {
-                quantity++
-                binding.quantityField.text = quantity.toString()
-            } else {
-                Toast.makeText(requireContext(), "Max 3 of each item", Toast.LENGTH_SHORT).show()
+            if (!viewModel.incrementQuantity()) {
+                Toast.makeText(requireContext(), "Max quantity reached", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.decrementQuantityButton.setOnClickListener {
-            if (quantity > 1) {
-                quantity--
-                binding.quantityField.text = quantity.toString()
-            }
+            viewModel.decrementQuantity()
         }
 
         binding.enterItemButton.setOnClickListener {
             val textEntered = binding.enterItemNameField.text.toString()
-            if (viewModel.onEnterItemButtonClicked(textEntered, quantity)) {
+            if (viewModel.onEnterItemButtonClicked(textEntered)) {
                 dismiss()
             } else {
                 Toast.makeText(requireContext(), "Item not found", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.quantity = viewModel.observableQuantity
+
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun initCamera() {
@@ -111,6 +107,7 @@ class AddItemDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.resetQuantity()
         initViews()
         initCamera()
     }

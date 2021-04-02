@@ -1,6 +1,7 @@
 package com.augustg.shoppingcart.shopping
 
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,10 +13,40 @@ import java.math.BigDecimal
 
 class ShoppingViewModel : ViewModel() {
 
+    companion object {
+        const val MAX_QUANTITY = 3
+    }
+
+    private var quantity = 1
+    var observableQuantity = ObservableInt(quantity)
+
+    /**
+     * @return false once max quantity is reached
+     */
+    fun incrementQuantity(): Boolean {
+        return if (quantity < MAX_QUANTITY) {
+            quantity++
+            observableQuantity.set(quantity)
+            true
+        } else false
+    }
+
+    fun decrementQuantity() {
+        if (quantity > 1) {
+            quantity--
+            observableQuantity.set(quantity)
+        }
+    }
+
+    fun resetQuantity() {
+        quantity = 1
+        observableQuantity.set(quantity)
+    }
+
     /**
      * @return false if the item was not found
      */
-    fun onEnterItemButtonClicked(textEntered: String, quantity: Int): Boolean {
+    fun onEnterItemButtonClicked(textEntered: String): Boolean {
         return when {
             textEntered.startsWith("0") -> { // user entered an item id
                 try {

@@ -15,5 +15,4 @@
     <string name="enter_item_button_text">Add to cart</string>
     <string name="decrement_quantity_symbol">-</string>
     <string name="increment_quantity_symbol">+</string>
-    <string name="initial_quantity_value">1</string>
 </resources>
