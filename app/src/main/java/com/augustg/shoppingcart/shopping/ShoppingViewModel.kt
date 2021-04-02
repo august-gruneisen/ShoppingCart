@@ -1,3 +1,8 @@
+/*
+ * Created by August Gruneisen on 4/2/21 1:49 PM
+ * Copyright (c) 2021 . All rights reserved.
+ */
+
 package com.augustg.shoppingcart.shopping
 
 import androidx.databinding.ObservableField

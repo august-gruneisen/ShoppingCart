@@ -18,9 +18,13 @@ object Store {
      */
     val sampleInventory = mapOf(
         "apple" to ItemInformation(id = "0001", price = 1.99),
-        "swordfish" to ItemInformation(id = "0002", price = 21.99),
-        "blueberries" to ItemInformation(id = "0003", price = 5.99),
-        "cashews" to ItemInformation(id = "0004", price = 10.99)
+        "blueberries" to ItemInformation(id = "0002", price = 5.99),
+        "cashews" to ItemInformation(id = "0003", price = 10.99),
+        "swordfish" to ItemInformation(id = "0004", price = 21.99),
+        "avocados" to ItemInformation(id = "0005", price = 5.00),
+        "pineapple" to ItemInformation(id = "0006", price = 2.99),
+        "oatmeal" to ItemInformation(id = "0007", price = 0.99),
+        "broccoli" to ItemInformation(id = "0008", price = 1.55)
     )
 
     /**
