@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="androidx.databinding.ObservableField" />
 
         <variable
@@ -24,18 +26,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty_cart_message_text"
-            android:visibility="gone"
+            android:visibility='@{totalPriceInCart.contentEquals("$0.00") ? View.VISIBLE : View.GONE}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/items_in_cart_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/global_spacing_medium"
-            android:visibility="visible"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/add_item_fab"
             app:layout_constraintLeft_toLeftOf="parent"
