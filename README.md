@@ -6,9 +6,9 @@ Toy app to simulate an intelligent shopping cart system using CameraX + ML Kit f
 [Download the APK](https://github.com/august-gruneisen/ShoppingCart/raw/master/.github/ShoppingCart.apk) to test with these [QR codes](.github/item-codes.png).
 
 <p align="center">
-  <img src=".github/adding-by-qr.gif" width="300" alt="Adding items by QR"/>
-	<img src=".github/removing.gif" width="300" alt="Removing items"/>
-	<img src=".github/adding-by-name.gif" width="300" alt="Adding items by name"/>
+  <img src=".github/adding-by-qr.gif" width="200" alt="Adding items by QR"/>
+	<img src=".github/removing.gif" width="200" alt="Removing items"/>
+	<img src=".github/adding-by-name.gif" width="200" alt="Adding items by name"/>
 </p>
 
 ## Scalability
